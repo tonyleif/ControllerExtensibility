@@ -9,5 +9,17 @@ namespace ControllerExtensibility.Controllers
         {
             return View("Result", new Result { ControllerName = "Customer", Actionname = "List" });
         }
+
+        [ActionName("Enumerate")]
+        public ViewResult List()
+        {
+            return View("Result", new Result { controller = "Customer", action = "Lists" });
+        }
+
+        [NonAction]
+        public ActionResult MyAction()
+        {
+            return View();
+        }
     }
 }
