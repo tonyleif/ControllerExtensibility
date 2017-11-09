@@ -1,15 +1,23 @@
 ﻿using System.Web.Mvc;
 using ControllerExtensibility.Models;
+using System.Threading.Tasks;
 
 namespace ControllerExtensibility.Controllers
 {
     public class RemoteDataController : Controller
     {
-        public ActionResult Data()
+        public async Task<ActionResult> Data()
         {
-            RemoteService service = new RemoteService();
-            string data = service.GetRemoteData();
+            //RemoteService service = new RemoteService();
+            //string data = service.GetRemoteData();
+            string data = await Task<string>.Factory.StartNew(() => { return new RemoteService().GerRemoteData(); });
             return View((object)data);
+        }
+
+        public async Task<ActionResult> ConsumeAsyncMethod()
+        {
+            string data = await new RemoteService().GetRemoteDataAsync();
+            return View("Data", (object)data);
         }
     }
 }
